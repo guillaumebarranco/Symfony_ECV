@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div>
+		<a href="{{ path('article_new')}}">Créer un article</a>
+	</div>
+
+    {% for article in articles %}
+        <a href="{{ path('article_show', {id: article.id}) }}">
+            <h4>{{ article.title }}</h4>
+        </a>
+
+
+        <p>
+            {{ article.content[:20] }}...
+        </p>
+
+		<div>
+			<a href="{{ path('article_remove', {id:article.id}) }}">Remove Article</a>
+		</div>
+
+        <hr>
+    {% endfor %}
+{% endblock %}
