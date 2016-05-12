@@ -2,6 +2,16 @@
 
 {% block body %}
 
+	{% for flash_message in app.session.flashBag.get('success') %}
+	    <div class="flash-success">
+	        {{ flash_message }}
+	    </div>
+	{% endfor %}
+
+	<div>
+		<a href="{{ path('article_list')}}">Retour à la liste des articles</a>
+	</div>
+
 	<h1>Création d'un article</h1>
 
 	{{ form(form, {attr: {novalidate: 'novalidate'}}) }}

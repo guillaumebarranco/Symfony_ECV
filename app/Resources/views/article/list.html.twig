@@ -2,12 +2,18 @@
 
 {% block body %}
 
+	{% for flash_message in app.session.flashBag.get('success') %}
+	    <div class="flash-success">
+	        {{ flash_message }}
+	    </div>
+	{% endfor %}
+
 	<div>
 		<a href="{{ path('article_new')}}">Créer un article</a>
 	</div>
 
     {% for article in articles %}
-        <a href="{{ path('article_show', {id: article.id}) }}">
+        <a href="{{ path('article_view', {id: article.id}) }}">
             <h4>{{ article.title }}</h4>
         </a>
 

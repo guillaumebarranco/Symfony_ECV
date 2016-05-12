@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+	<div>
+		<a href="{{ path('article_list')}}">Retour à la liste des articles</a>
+	</div>
+
 	{{ form(form, {attr: {novalidate: 'novalidate'}}) }}
 {% endblock %}

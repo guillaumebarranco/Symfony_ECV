@@ -10,18 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/articles")
- */
 class ArticleController extends Controller {
 
     function em() {
         return $this->getDoctrine()->getManager();
     }
 
-    /**
-     * @Route("/", name="article_list")
-     */
     public function listAction() {
 
         $articles = $this->getDoctrine()
@@ -33,9 +27,6 @@ class ArticleController extends Controller {
         ]);
     }
 
-    /**
-     * @Route("/view/{id}", name="article_show")
-     */
     public function viewAction(Request $request, Articles $article) {
 
         return $this->render('article/view.html.twig', [
@@ -43,26 +34,22 @@ class ArticleController extends Controller {
         ]);
     }
 
-    /**
-     * @Route("/remove/{id}", name="article_remove")
-     */
     public function removeAction(Request $request, Articles $article) {
         $this->em()->remove($article);
         $this->em()->flush();
 
+        $this->addFlash('success', 'Article supprimé !');
+
         return $this->redirectToRoute('article_list');
     }
 
-    /**
-     * @Route("/new", name="article_new")
-     */
     public function newAction(Request $request) {
 
         $article = new Articles();
         $form = $this->createForm(ArticlesType::class, $article);
         $form->add('submit', SubmitType::class);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if (isset($request) && $form->handleRequest($request)->isValid()) {
 
             $author = $this->getDoctrine()->getRepository('AppBundle:User')->find(1);
 
@@ -84,9 +71,6 @@ class ArticleController extends Controller {
         ]);
     }
 
-    /**
-     * @Route("/edit/{id}", name="article_edit")
-     */
     public function editAction(Request $request, Articles $article) {
 
         $form = $this->createForm(ArticlesType::class, $article);
